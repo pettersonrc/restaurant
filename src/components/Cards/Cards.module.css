@@ -1,5 +1,8 @@
 .cards {
     flex: 1 1 250px;
+    border: 1px #daa520 solid;
+    border-radius: 8px;
+    height: 450px;
 }
 
 .cards figure {
@@ -9,13 +12,38 @@
 .img {
     height: 100%;
     width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .container_texto {
-    height: 150px;
+    height: 200px;
     padding: 10px;
 
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+}
+
+.container_descricao {
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container_descricao h3 {
+    font-weight: 500;
+}
+
+.texto_categoria {
+    color: #daa520;
+}
+
+.container_preco {
+    font-weight: bold;
+
+    display: flex;
+    justify-content: flex-end;
 }

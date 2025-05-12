@@ -1,12 +1,36 @@
+"use client";
+
 import Image from "next/image";
 import estilos from "./page.module.css";
 import Categorias from "@/components/Categorias";
 import CampoDeBusca from "@/components/CampoDeBusca";
 import Cards from "@/components/Cards";
-import { produtos } from "@/dados/data_produtos";
 import banner from "/public/banner.png";
+import { useState } from "react";
+import {
+    filtrarProdutos,
+    buscarProduto,
+    produtosEntradas,
+} from "@/services/servicos";
 
 export default function Home() {
+    const [dadosFiltrados, setDadosFiltrados] = useState(produtosEntradas);
+    const [textoBuscaDigitado, setTextoBuscaDigitado] = useState("");
+    const [botaoClicado, setBotaoClicado] = useState("");
+
+    const handleBusca = (textoDigitado) => {
+        setTextoBuscaDigitado(textoDigitado);
+        textoDigitado.length >= 3 &&
+            setDadosFiltrados(buscarProduto(textoDigitado));
+        setBotaoClicado("");
+    };
+
+    const handleFiltro = (categoria) => {
+        setTextoBuscaDigitado("");
+        setDadosFiltrados(filtrarProdutos(categoria));
+        setBotaoClicado(categoria);
+    };
+
     return (
         <div>
             <header className={estilos.cabecalho}>
@@ -24,12 +48,18 @@ export default function Home() {
                 </div>
             </header>
             <main className={estilos.container_main}>
-                <Categorias />
-                <CampoDeBusca />
+                <Categorias
+                    handleFiltro={handleFiltro}
+                    botaoClicado={botaoClicado}
+                />
+                <CampoDeBusca
+                    textoBuscaDigitado={textoBuscaDigitado}
+                    handleBusca={handleBusca}
+                />
                 <section className={estilos.secao_cards}>
                     <h2>Cardápio</h2>
                     <div className={estilos.cards}>
-                        {produtos.map((produto) => (
+                        {dadosFiltrados.map((produto) => (
                             <Cards
                                 key={produto.id}
                                 imagem={produto.imagem}
